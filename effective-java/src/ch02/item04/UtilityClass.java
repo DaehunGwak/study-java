@@ -1,6 +1,6 @@
 package ch02.item04;
 
-import java.lang.Math
+import java.lang.Math;
 
 public class UtilityClass {
 
