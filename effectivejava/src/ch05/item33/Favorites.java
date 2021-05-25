@@ -17,7 +17,7 @@ public class Favorites {
                 Objects.requireNonNull(type), // null 제외 보장
                 type.cast(instance)); // 런타임에서 타입 안정성 확
     }
-보
+
     public <T> T getFavorite(Class<T> type) {
         return type.cast(favorites.get(type)); // 동적 타입 캐스팅
     }
