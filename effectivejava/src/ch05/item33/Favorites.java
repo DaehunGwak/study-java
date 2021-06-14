@@ -29,7 +29,7 @@ public class Favorites {
         f.putFavorite(Integer.class, 0xcafebabe);
         f.putFavorite(Class.class, Favorites.class);
 
-        f.putFavorite((Class)Integer.class, "인티저 클래스 아닌 것");
+//        f.putFavorite((Class)Integer.class, "인티저 클래스 아닌 것");
 
         String favoriteString = f.getFavorite(String.class);
         int favoriteInteger = f.getFavorite(Integer.class);
