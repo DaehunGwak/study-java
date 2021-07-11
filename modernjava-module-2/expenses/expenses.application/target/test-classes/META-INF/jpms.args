@@ -1,0 +1,4 @@
+--patch-module
+expenses.application=_
+--add-reads
+expenses.application=ALL-UNNAMED
