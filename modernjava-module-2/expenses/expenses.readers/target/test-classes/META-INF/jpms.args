@@ -1,0 +1,4 @@
+--patch-module
+expenses.readers=_
+--add-reads
+expenses.readers=ALL-UNNAMED
