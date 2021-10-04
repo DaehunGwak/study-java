@@ -1,18 +1,17 @@
 package io.ordi.refactoring.ch04.producer;
 
 import io.ordi.refactoring.ch04.MockDataFactory;
-import io.ordi.refactoring.ch04.Producer;
 import io.ordi.refactoring.ch04.Province;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
 
-class ProducerTest {
+@Slf4j
+class ProvinceTest {
 
     Province province;
 
@@ -23,14 +22,17 @@ class ProducerTest {
     }
 
     @Test
-    void setProduction() {
-        // when
-        List<Producer> producers = province.getProducers();
-        producers.get(0).setProduction(20);
-
+    void getShortfall() {
         // then
-        assertThat(province.getShortfall(), is(-6));
-        assertThat(province.getProfit(), is(292));
+        assertThat(province.getShortfall(), is(5));
+        log.debug(("province={}"), province);
+    }
+
+    @Test
+    void getProfit() {
+        // then
+        assertThat(province.getProfit(), is(230));
+        log.debug(("province={}"), province);
     }
 
     @Test
