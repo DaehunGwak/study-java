@@ -1,11 +1,12 @@
 package io.ordi.refactoring.ch04;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class MockDataFactory {
 
-    public Province sampleProvinceData() {
-        List<Producer> producers = List.of(
+    public static Province sampleProvinceData() {
+        List<Producer> producers = Arrays.asList(
                 new Producer("Byzantium", 10, 9),
                 new Producer("Attalia", 12, 10),
                 new Producer("Sinope", 10, 6)

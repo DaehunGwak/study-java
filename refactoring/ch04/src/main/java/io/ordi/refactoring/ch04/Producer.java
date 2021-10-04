@@ -1,15 +1,19 @@
 package io.ordi.refactoring.ch04;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class Producer {
 
     private final String name;
-    @Setter private Province province;
-    @Setter private int cost;
+    @Setter
+    @ToString.Exclude
+    private Province province;
+    @Setter
+    private int cost;
     private int production;
 
     public Producer(String name, int cost, int production) {
@@ -19,7 +23,8 @@ public class Producer {
     }
 
     public void setProduction(int production) {
-        this.province.setTotalProduction(production - this.production);
+        int resultTotalProduction = this.getProvince().getTotalProduction() + production - this.production;
+        this.province.setTotalProduction(resultTotalProduction);
         this.production = production;
     }
 }
