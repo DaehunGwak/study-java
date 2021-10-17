@@ -3,13 +3,26 @@ package io.ordi.refactoring.ch06.item11;
 public class SplitPhaseMain {
 
     static public double getPriceOrder(Product product, long quantity, ShippingMethod shippingMethod) {
+        PriceData priceData = calculatePricingData(product, quantity);
+        return applyShipping(priceData, shippingMethod);
+    }
+
+    static private PriceData calculatePricingData(Product product, long quantity) {
         double basePrice = product.getBasePrice() * quantity;
         double discount = Math.max(quantity - product.getDiscountThreshold(), 0)
                 * product.getBasePrice() * product.getDiscountRate();
-        double shippingPerCase = (basePrice > shippingMethod.getDiscountThreshold())
+        return PriceData.builder()
+                .basePrice(basePrice)
+                .quantity(quantity)
+                .discount(discount)
+                .build();
+    }
+
+    static private double applyShipping(PriceData priceData, ShippingMethod shippingMethod) {
+        double shippingPerCase = (priceData.getBasePrice() > shippingMethod.getDiscountThreshold())
                 ? shippingMethod.getDiscountedFee() : shippingMethod.getFeePerCase();
-        double shippingCost = quantity * shippingPerCase;
-        return basePrice - discount + shippingCost;
+        double shippingCost = priceData.getQuantity() * shippingPerCase;
+        return priceData.getBasePrice() - priceData.getDiscount() + shippingCost;
     }
 
     public static void main(String[] args) {
