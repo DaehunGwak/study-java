@@ -1,14 +1,16 @@
 package io.ordi.refactoring.ch06.item11.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Data;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-public class JsonOrderCountMain {
+/**
+ * 예시: 첫 번째 단계에 변환기(transform) 사용하기
+ */
+public class JsonOrderCountMain2 {
 
     public static void main(String[] args) {
         try {
@@ -20,24 +22,19 @@ public class JsonOrderCountMain {
     }
 
     public static long run(String[] args) throws IOException {
-        return countOrders(parseCommandLine(args));
-    }
-
-    private static CommandLine parseCommandLine(String[] args) {
         if (args.length == 0)
             throw new RuntimeException("파일명을 입력하세요.");
-        CommandLine result = new CommandLine();
-        result.setOnlyCountReady(Stream.of(args).anyMatch("-r"::equals));
-        result.setFilename(args[args.length - 1]);
-        return result;
+        CommandLine commandLine = new CommandLine(args);
+        return countOrders(commandLine, args);
     }
 
-    private static long countOrders(CommandLine commandLine) throws IOException {
+
+    private static long countOrders(CommandLine commandLine, String[] args) throws IOException {
         File input = Paths.get(commandLine.getFilename()).toFile();
         ObjectMapper mapper = new ObjectMapper();
         Order[] orders = mapper.readValue(input, Order[].class);
 
-        if (commandLine.isOnlyCountReady()) {
+        if (Stream.of(args).anyMatch("-r"::equals)) {
             return Stream.of(orders)
                     .filter(o -> "ready".equals(o.getStatus()))
                     .count();
@@ -46,9 +43,4 @@ public class JsonOrderCountMain {
         }
     }
 
-    @Data
-    static private class CommandLine {
-        private boolean onlyCountReady;
-        private String filename;
-    }
 }

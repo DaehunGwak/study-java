@@ -1,9 +1,15 @@
 package io.ordi.refactoring.ch06.item11.json;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@AllArgsConstructor
 public class CommandLine {
-    private boolean onlyCountReady;
-    private String filename;
+
+    private String[] args;
+
+    public String getFilename() {
+        return args[args.length - 1];
+    }
 }
