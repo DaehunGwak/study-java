@@ -1,4 +1,4 @@
-package io.ordi.refactoring.ch06.item11;
+package io.ordi.refactoring.ch06.item11.shipping;
 
 public class SplitPhaseMain {
 
