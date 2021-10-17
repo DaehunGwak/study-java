@@ -18,16 +18,27 @@ public class JsonOrderCountMain {
         }
     }
 
-    static long run(String[] args) throws IOException {
+    public static long run(String[] args) throws IOException {
+        return countOrders(parseCommandLine(args));
+    }
+
+    private static CommandLine parseCommandLine(String[] args) {
         if (args.length == 0)
             throw new RuntimeException("파일명을 입력하세요.");
+        CommandLine result = new CommandLine();
+        result.setOnlyCountReady(Stream.of(args).anyMatch("-r"::equals));
+        result.setFilename(args[args.length - 1]);
+        return result;
+    }
 
-        String filename = args[args.length - 1];
-        File input = Paths.get(filename).toFile();
+
+
+    private static long countOrders(CommandLine commandLine) throws IOException {
+        File input = Paths.get(commandLine.getFilename()).toFile();
         ObjectMapper mapper = new ObjectMapper();
         Order[] orders = mapper.readValue(input, Order[].class);
 
-        if (Stream.of(args).anyMatch("-r"::equals)) {
+        if (commandLine.isOnlyCountReady()) {
             return Stream.of(orders)
                     .filter(o -> "ready".equals(o.getStatus()))
                     .count();
