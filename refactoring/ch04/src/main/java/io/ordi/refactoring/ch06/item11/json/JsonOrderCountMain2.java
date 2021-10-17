@@ -22,8 +22,6 @@ public class JsonOrderCountMain2 {
     }
 
     public static long run(String[] args) throws IOException {
-        if (args.length == 0)
-            throw new RuntimeException("파일명을 입력하세요.");
         CommandLine commandLine = new CommandLine(args);
         return countOrders(commandLine, args);
     }
@@ -34,7 +32,7 @@ public class JsonOrderCountMain2 {
         ObjectMapper mapper = new ObjectMapper();
         Order[] orders = mapper.readValue(input, Order[].class);
 
-        if (Stream.of(args).anyMatch("-r"::equals)) {
+        if (commandLine.isOnlyCountReady()) {
             return Stream.of(orders)
                     .filter(o -> "ready".equals(o.getStatus()))
                     .count();
